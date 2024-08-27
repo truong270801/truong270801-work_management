@@ -17,9 +17,9 @@ async def get_task(db: Session = Depends(get_db), token_payload: dict = Depends(
     task = crud_task.get_tasks(db)
     return ResponseTask(task=task).dict(exclude_none=True)
 
-@task.get('/{id}')
-async def get_task_by_id(id: int, db: Session = Depends(get_db), token_payload: dict = Depends(check_jwt_token)):
-    task = crud_task.get_task_by_id(db, id)
+@task.get('/{user_id}')
+async def get_task_by_id(user_id: int, db: Session = Depends(get_db), token_payload: dict = Depends(check_jwt_token)):
+    task = crud_task.get_task_by_id(db, user_id)
     return ResponseTask(task=task).dict(exclude_none=True)
 
 @task.put('/update/{id}')

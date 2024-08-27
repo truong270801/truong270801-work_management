@@ -10,6 +10,7 @@ from app.routers.router_task import task
 from app.security_jwt.jwt import create_jwt_token,decode_jwt_token, create_refresh_token
 from passlib.context import CryptContext
 from sqlalchemy.exc import IntegrityError
+from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
 
@@ -21,8 +22,22 @@ admin_fullname = os.getenv("ADMIN_FULLNAME")
 
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 30))
 REFRESH_TOKEN_EXPIRE_DAYS = int(os.getenv("REFRESH_TOKEN_EXPIRE_DAYS", 7))
+API_URL_CORSS = os.getenv("API_URL_CORSS")
 
 app = FastAPI()
+
+origins = [
+    API_URL_CORSS,
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 async def read_root():
@@ -73,7 +88,9 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {
         "access_token": access_token,
         "refresh_token": refresh_token,
-        "token_type": "bearer"
+        "token_type": "bearer",
+        "fullname": user.fullname,
+        "id":user.id
     }
 
     return {"access_token": new_access_token, "token_type": "bearer"}

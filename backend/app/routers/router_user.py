@@ -9,7 +9,7 @@ from app.security_jwt.middleware_check import check_jwt_token
 user = APIRouter()
 
 @user.post('/create')
-async def create_user(request: RequestUser, db: Session = Depends(get_db), token_payload: dict = Depends(check_jwt_token)):
+async def create_user(request: RequestUser, db: Session = Depends(get_db)):
     created_user = crud_user.create_user(db, request)
     return ResponseUser(user=created_user).dict(exclude_none=True)
 

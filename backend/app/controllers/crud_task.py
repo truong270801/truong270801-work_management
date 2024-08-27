@@ -11,9 +11,9 @@ def get_tasks(db: Session):
     repository = TaskRepository(db)
     return repository.get_tasks()
 
-def get_task_by_id(db: Session, id: int):
+def get_task_by_id(db: Session, user_id: int):
     repository = TaskRepository(db)
-    return repository.get_task_by_id(id)
+    return repository.get_task_by_id(user_id)
 
 def update_task(db: Session, id: int, request: RequestTask):
     repository = TaskRepository(db)
