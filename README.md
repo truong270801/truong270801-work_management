@@ -18,9 +18,9 @@ This project is a Todo List Management application built using ReactJS for the f
 - **Responsive Design**: Mobile-friendly design using Tailwind CSS and Material-UI.
 ## Interface
 
- ![Giao diện đăng nhập](../work_management/asset/login.png)
-![Giao diện đăng kí](../work_management/asset/Register.png)
- ![Giao diện trang chủ](../work_management/asset/Dashboard.png)
+ ![../work_management/asset/login.png](https://github.com/truong270801/truong270801-work_management/blob/main/asset/login.png)
+![../work_management/asset/Register.png](https://github.com/truong270801/truong270801-work_management/blob/main/asset/Register.png)
+ ![../work_management/asset/Dashboard.png](https://github.com/truong270801/truong270801-work_management/blob/main/asset/Dashboard.png)
 
 ## Technologies
 
