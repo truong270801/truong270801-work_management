@@ -16,6 +16,11 @@ This project is a Todo List Management application built using ReactJS for the f
 - **Search and Filter**: Search tasks by title and filter by category.
 - **Deadline Management**: Set deadlines for tasks.
 - **Responsive Design**: Mobile-friendly design using Tailwind CSS and Material-UI.
+## Interface
+
+ ![Giao diện đăng nhập](../work_management/asset/login.png)
+![Giao diện đăng kí](../work_management/asset/Register.png)
+ ![Giao diện trang chủ](../work_management/asset/Dashboard.png)
 
 ## Technologies
 
