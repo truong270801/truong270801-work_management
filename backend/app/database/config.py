@@ -14,7 +14,7 @@ db_pass = os.getenv("DB_PASS")
 db_host = os.getenv("DB_HOST")
 db_name = os.getenv("DB_NAME")
 
-encoded_password = urllib.parse.quote(db_pass)
+encoded_password = urllib.parse.quote(str(db_pass))
 
 DATABASE_URL = f"postgresql://{db_user}:{encoded_password}@{db_host}/{db_name}"
 engine = create_engine(DATABASE_URL)

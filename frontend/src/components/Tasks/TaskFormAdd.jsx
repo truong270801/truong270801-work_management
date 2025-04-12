@@ -1,9 +1,12 @@
+// components/task/TaskFormAdd.js
 import React, { useState } from 'react';
 import { TextField, Button, InputLabel, NativeSelect } from '@mui/material';
 import { createTask } from '../../services/ApiTasks';
+import { useStateApi } from '../../store/useStateApi';
 
 function TaskFormAdd() {
-  const userId = localStorage.getItem('user_id'); 
+  const userId = localStorage.getItem('user_id');
+  const toggleFetch = useStateApi((state) => state.toggleFetch);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -11,30 +14,28 @@ function TaskFormAdd() {
     level: '',
     status: '',
     deadline: '',
-    user_id: userId || '', 
-    created_at: '', 
+    user_id: userId || '',
+    created_at: '',
   });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     const currentTimestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
     const taskData = {
       ...formData,
-      created_at: currentTimestamp, 
+      created_at: currentTimestamp,
     };
 
     try {
-      const response = await createTask(taskData);
-      console.log('Task created successfully:', response);
+      await createTask(taskData);
       setFormData({
         title: '',
         description: '',
@@ -42,8 +43,9 @@ function TaskFormAdd() {
         status: '',
         deadline: '',
         user_id: userId || '',
-        created_at: currentTimestamp, 
+        created_at: currentTimestamp,
       });
+      toggleFetch(); // Trigger reload TaskList
     } catch (error) {
       console.error('Error creating task:', error);
     }
@@ -52,19 +54,19 @@ function TaskFormAdd() {
   return (
     <div className="w-full p-4">
       <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-end gap-4 w-full">
-        <TextField 
+        <TextField
           name="title"
-          label="Task Title" 
-          variant="standard" 
+          label="Task Title"
+          variant="standard"
           value={formData.title}
           onChange={handleChange}
           className="w-full md:flex-1"
           required
         />
-        <TextField 
+        <TextField
           name="description"
-          label="Task Description" 
-          variant="standard" 
+          label="Task Description"
+          variant="standard"
           value={formData.description}
           onChange={handleChange}
           className="w-full md:flex-1"
@@ -78,9 +80,7 @@ function TaskFormAdd() {
             name="level"
             value={formData.level}
             onChange={handleChange}
-            inputProps={{
-              id: 'level',
-            }}
+            inputProps={{ id: 'level' }}
             className="w-full"
             required
           >
@@ -98,9 +98,7 @@ function TaskFormAdd() {
             name="status"
             value={formData.status}
             onChange={handleChange}
-            inputProps={{
-              id: 'status',
-            }}
+            inputProps={{ id: 'status' }}
             className="w-full"
             required
           >
@@ -110,16 +108,14 @@ function TaskFormAdd() {
             <option value="done">Done</option>
           </NativeSelect>
         </div>
-        <TextField 
+        <TextField
           name="deadline"
-          label="Deadline" 
-          variant="standard"  
+          label="Deadline"
+          variant="standard"
           type="datetime-local"
           value={formData.deadline}
           onChange={handleChange}
-          InputLabelProps={{
-            shrink: true,
-          }}
+          InputLabelProps={{ shrink: true }}
           className="w-full md:w-auto"
           required
         />
